@@ -1,7 +1,10 @@
 package com.tazmans_android.androidjetpackgmail.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import com.tazmans_android.androidjetpackgmail.DrawerMenuData
 
 @Composable
-fun GmailDrawerMenu() {
+fun GmailDrawerMenu(scrollState: ScrollState) {
 
     val menuList = listOf(
         DrawerMenuData.Divider,
@@ -38,12 +41,47 @@ fun GmailDrawerMenu() {
         DrawerMenuData.Help
     )
 
-    Column {
+    Column(Modifier.verticalScroll(scrollState)) {
         Text(
             text = "Gmail", color = Color.Red,
             modifier = Modifier.padding(start = 20.dp, top = 20.dp),
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold
+        )
+        menuList.forEach{
+            item ->
+                when {
+                    item.isDivider -> Divider(
+                        modifier = Modifier.padding(bottom = 20.dp, top = 20.dp)
+                    )
+                    item.isHeader -> Text(
+                        text = item.title!!,
+                        fontWeight = FontWeight.Light,
+                        modifier = Modifier.padding(bottom = 20.dp, top = 20.dp, start = 20.dp)
+                    )
+                    else -> MailDrawerItem(item = item)
+                }
+
+        }
+    }
+}
+
+@Composable
+fun MailDrawerItem(item: DrawerMenuData) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .padding(top = 16.dp)
+    ) {
+        Image(
+            imageVector = item.icon!!,
+            contentDescription = item.title!!,
+            modifier = Modifier.weight(0.5f)
+        )
+        Text(
+            text = item.title,
+            modifier = Modifier.weight(2.0f)
         )
     }
 }

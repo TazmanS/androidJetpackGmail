@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace 'com.tazmans_android.androidjetpackgmail'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.tazmans_android.androidjetpackgmail"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
